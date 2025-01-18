@@ -27,16 +27,16 @@ public class TransactionServiceImpl implements TransactionService {
     @LogDataSourceError
     @Override
     public Page<TransactionDtoResponse> getAllTransactions(Pageable pageable) {
-        final Page<Transaction> transactionPage = transactionRepository.findAll(pageable);
-        return transactionPage.map(transaction -> modelMapper.map(transaction, TransactionDtoResponse.class));
+        return transactionRepository.findAll(pageable).
+                map(transaction -> modelMapper.map(transaction, TransactionDtoResponse.class));
     }
 
     @Transactional(readOnly = true)
     @LogDataSourceError
     @Override
     public TransactionDtoResponse getTransaction(Long id) {
-        final Transaction transaction = transactionRepository.findById(id)
+        return transactionRepository.findById(id)
+                .map(transaction -> modelMapper.map(transaction, TransactionDtoResponse.class))
                 .orElseThrow(() -> new EntityNotFoundException(Transaction.class, id));
-        return modelMapper.map(transaction, TransactionDtoResponse.class);
     }
 }

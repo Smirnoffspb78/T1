@@ -33,20 +33,18 @@ public class AccountServiceImpl implements AccountService {
     @LogDataSourceError
     @Override
     public Page<AccountDtoResponse> getAllAccounts(Pageable pageable) {
-        final Page<Account> accountPage = accountRepository.findAll(pageable);
-        return accountPage.map(account -> modelMapper.map(account, AccountDtoResponse.class));
+        return accountRepository.findAll(pageable)
+                .map(account -> modelMapper.map(account, AccountDtoResponse.class));
+
     }
 
     @Transactional(readOnly = true)
     @LogDataSourceError
     @Override
     public AccountDtoResponse getAccount(Long id) {
-        if (id == 157){
-            throw  new NullPointerException();
-        }
-        final Account account = accountRepository.findById(id)
+        return accountRepository.findById(id)
+                .map(account -> modelMapper.map(account, AccountDtoResponse.class))
                 .orElseThrow(() -> new EntityNotFoundException(Account.class, id));
-        return modelMapper.map(account, AccountDtoResponse.class);
     }
 
     @Override

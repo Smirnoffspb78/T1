@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 public class TransactionDtoResponse {
 
+    private Long id;
+
     private AccountDtoResponse account;
 
     private BigDecimal amount;

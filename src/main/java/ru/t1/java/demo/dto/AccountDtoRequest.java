@@ -9,5 +9,6 @@ import ru.t1.java.demo.model.enums.AccountType;
  * @param accountType Тип счета
  */
 public record AccountDtoRequest(
-        @NotNull Long clientId, @NotNull AccountType accountType) {
+        @NotNull Long clientId,
+        @NotNull AccountType accountType) {
 }

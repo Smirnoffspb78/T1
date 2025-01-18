@@ -23,13 +23,13 @@ public class TransactionControllerImpl implements TransactionController {
 
     @Override
     @GetMapping
-    public ResponseEntity<Page<TransactionDtoResponse>> getAllTransactions(Pageable pageable) {
-        return new ResponseEntity<>(transactionService.getAllTransactions(pageable), OK);
+    public Page<TransactionDtoResponse> getAllTransactions(Pageable pageable) {
+        return transactionService.getAllTransactions(pageable);
     }
 
     @Override
-    @GetMapping("/{id}")
-    public ResponseEntity<TransactionDtoResponse> getTransaction(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(transactionService.getTransaction(id), OK);
+    @GetMapping("{id}")
+    public TransactionDtoResponse getTransaction(@PathVariable(name = "id") Long id) {
+        return transactionService.getTransaction(id);
     }
 }

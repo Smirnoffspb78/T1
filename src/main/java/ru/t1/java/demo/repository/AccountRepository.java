@@ -9,7 +9,6 @@ import ru.t1.java.demo.annotation.LogDataSourceError;
 import ru.t1.java.demo.model.Account;
 
 
-@LogDataSourceError
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @EntityGraph(attributePaths = {"client"})
