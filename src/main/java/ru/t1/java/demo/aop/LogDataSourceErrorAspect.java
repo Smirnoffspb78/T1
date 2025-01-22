@@ -12,8 +12,6 @@ import ru.t1.java.demo.dto.response.DataSourceErrorLogDto;
 import ru.t1.java.demo.service.DataSourceErrorService;
 import ru.t1.java.demo.out.KafkaProducerService;
 
-import java.util.concurrent.TimeUnit;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static ru.t1.java.demo.util.ExceptionUtil.createDataSourceErrorLog;
 import static ru.t1.java.demo.util.ExceptionUtil.getStackTraceAsString;
@@ -38,7 +36,7 @@ public class LogDataSourceErrorAspect {
         DataSourceErrorLogDto dataSourceErrorLogDto = createDataSourceErrorLog(ex, joinPoint.getSignature().toShortString());
         try {
              kafkaProducerService.sendMessage(logDataSourceProperty.logErrorTopic(), "errorType",
-                    logDataSourceProperty.logErrorHeader(), dataSourceErrorLogDto)
+                    logDataSourceProperty.logErrorHeader(), dataSourceErrorLogDto, logDataSourceProperty.keyError())
                     .get(logDataSourceProperty.timeOut(), SECONDS);
             log.info("Message successfully sent to Kafka topic {}:", logDataSourceProperty.logErrorTopic());
         } catch (Throwable eKafka) {

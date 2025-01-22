@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record LogDataSourceProperty(
         String logErrorTopic,
         String logErrorHeader,
-        long timeOut
+        long timeOut,
+        String keyError
 ) {
 }

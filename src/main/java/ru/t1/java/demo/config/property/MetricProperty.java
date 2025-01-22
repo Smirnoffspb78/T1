@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "kafka.message")
 public record MetricProperty(
         String metricTopic,
-        String metricHeader
+        String metricHeader,
+        String keyMetric
 ) {
 }
