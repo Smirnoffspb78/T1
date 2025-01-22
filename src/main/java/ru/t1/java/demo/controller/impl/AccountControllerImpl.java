@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.t1.java.demo.annotation.Metric;
 import ru.t1.java.demo.controller.AccountController;
-import ru.t1.java.demo.dto.AccountDtoRequest;
-import ru.t1.java.demo.dto.AccountDtoResponse;
+import ru.t1.java.demo.dto.request.AccountDtoRequest;
+import ru.t1.java.demo.dto.response.AccountDtoResponse;
 import ru.t1.java.demo.service.AccountService;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -27,6 +28,7 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @GetMapping("{id}")
+    @Metric
     public AccountDtoResponse getAccount(@PathVariable(name = "id") Long id) {
         return accountService.getAccount(id);
     }
@@ -34,12 +36,14 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @PostMapping
     @ResponseStatus(CREATED)
+    @Metric
     public Long createAccount(@Valid @RequestBody AccountDtoRequest accountDtoRequest) {
         return accountService.createAccount(accountDtoRequest);
     }
 
     @Override
     @GetMapping
+    @Metric
     public Page<AccountDtoResponse> getAllAccounts(Pageable pageable) {
         return accountService.getAllAccounts(pageable);
     }

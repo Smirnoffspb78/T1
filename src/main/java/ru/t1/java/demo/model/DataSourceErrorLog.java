@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import java.io.Serializable;
+
 
 /**
  * Логер для ошибок.
@@ -19,7 +21,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Table(name = "data_source_error_logs")
 @Getter
 @Setter
-public class DataSourceErrorLog extends AbstractPersistable<Long> {
+public class DataSourceErrorLog extends AbstractPersistable<Long> implements Serializable {
 
     @NotBlank
     @Column(name = "stack_trace")

@@ -1,13 +1,15 @@
 package ru.t1.java.demo.service;
 
 
+import ru.t1.java.demo.model.DataSourceErrorLog;
+
 public interface LogErrorService {
 
     /**
      * Логирует сообщение об ошибке
      *
-     * @param throwable Исключение
-     * @param methodSignature Имя сигнатруы метода
      */
-    void logError(Throwable throwable, String methodSignature);
+    void logError(DataSourceErrorLog dataSourceErrorLog);
+
+    DataSourceErrorLog createDataSourceErrorLog(Throwable throwable, String methodSignature);
 }

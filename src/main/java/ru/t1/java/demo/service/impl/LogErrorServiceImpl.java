@@ -21,12 +21,17 @@ public class LogErrorServiceImpl implements LogErrorService {
 
     @Transactional(propagation = REQUIRES_NEW)
     @Override
-    public void logError(Throwable throwable, String methodSignature) {
+    public void logError(DataSourceErrorLog dataSourceErrorLog) {
+        dataSourceErrorLogRepository.save(dataSourceErrorLog);
+    }
+
+    @Override
+    public DataSourceErrorLog createDataSourceErrorLog(Throwable throwable, String methodSignature){
         final DataSourceErrorLog errorLog = new DataSourceErrorLog();
         final String stackTrace = getStackTraceAsString(throwable);
         errorLog.setMessage(throwable.getMessage());
         errorLog.setStackTrace(stackTrace);
         errorLog.setMethodSignature(methodSignature);
-        dataSourceErrorLogRepository.save(errorLog);
+        return errorLog;
     }
 }

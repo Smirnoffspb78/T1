@@ -17,6 +17,14 @@ spring:
       hibernate:
         format_sql: true
 
+    zookeeper:
+      # Настройка для подключения к Zookeeper
+      connect-string: localhost:2181
+      session-timeout: 10000
+      connection-timeout: 10000
+      max-retries: 3
+      retry-timeout: 3000
+
 logging:
   level:
     ROOT: INFO
@@ -24,3 +32,31 @@ logging:
 
 t1:
   scan-path: ru.t1.java.demo
+
+metric:
+  validTime: 1
+
+kafka:
+  config:
+    bootstrapServer: "localhost:29092,localhost:39092,localhost:49092"
+    producer:
+      acks: "all"
+      retry: 3
+      timeout: 2000
+      idempotence: true
+    consumer:
+      groupIdAccount: accountGroup
+      groupIdTransaction: transactionGroup
+      readPackage: ru.t1.java.demo.dto
+      accountPath: ru.t1.java.demo.dto.request.AccountDtoRequest
+      transactionPath: ru.t1.java.demo.dto.request.TransactionDtoRequest
+      infoHeaders: false
+      offsetReset: earliest
+      autoCommit: true
+  topics:
+    t1_demo_metrics: t1_demo_metrics
+    accounts: t1_demo_accounts
+    transactions: t1_demo_transactions
+  headers:
+    metric: METRICS
+    logError: DATA_SOURCE
