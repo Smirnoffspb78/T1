@@ -17,6 +17,7 @@ import ru.t1.java.demo.service.AccountService;
 import ru.t1.java.demo.service.ClientService;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +44,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDtoResponse getAccount(Long id) {
         return modelMapper.map(getAccountById(id), AccountDtoResponse.class);
-
     }
 
     @LogDataSourceError
@@ -66,5 +66,13 @@ public class AccountServiceImpl implements AccountService {
     public Account getAccountById(Long id) {
         return accountRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Account.class, id));
+    }
+
+    @Override
+    @LogDataSourceError
+    @Transactional(readOnly = true)
+    public Account getAccountByAccountId(UUID accountId) {
+        return accountRepository.findByAccountId(accountId)
+                .orElseThrow(() -> new EntityNotFoundException(Account.class, accountId));
     }
 }

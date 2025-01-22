@@ -3,8 +3,12 @@ package ru.t1.java.demo.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,13 +19,19 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Table(name = "client")
 public class Client extends AbstractPersistable<Long> {
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank
     @Column(name = "middle_name")
     private String middleName;
 
+    @NotNull
+    @Column(name = "client_id")
+    private UUID clientId;
 }

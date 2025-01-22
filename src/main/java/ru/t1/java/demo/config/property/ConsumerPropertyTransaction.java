@@ -17,6 +17,7 @@ public record ConsumerPropertyTransaction(
         String transactionPath,
         String offsetReset,
         boolean autoCommit,
-        String isolation
+        String isolation,
+        String transactionPathResult
 ) {
 }

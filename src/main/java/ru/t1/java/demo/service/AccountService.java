@@ -6,6 +6,8 @@ import ru.t1.java.demo.dto.request.AccountDtoRequest;
 import ru.t1.java.demo.dto.response.AccountDtoResponse;
 import ru.t1.java.demo.model.Account;
 
+import java.util.UUID;
+
 
 /**
  * Сервисный слой для работы с банковскими счетами.
@@ -30,5 +32,12 @@ public interface AccountService {
      */
     Long createAccount(AccountDtoRequest accountDtoRequest);
 
+    /**
+     * Возвращает банковский счет по его идентификатору.
+     * @param id Идентификатор банковского счета
+     * @return Информация о банковском счете
+     */
     Account getAccountById(Long id);
+
+    Account getAccountByAccountId(UUID accountId);
 }

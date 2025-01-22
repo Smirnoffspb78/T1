@@ -21,6 +21,7 @@ import ru.t1.java.demo.config.property.ConsumerPropertyAccount;
 import ru.t1.java.demo.config.property.ConsumerPropertyTransaction;
 import ru.t1.java.demo.dto.request.AccountDtoRequest;
 import ru.t1.java.demo.dto.request.TransactionDtoRequest;
+import ru.t1.java.demo.dto.response.TransactionDtoResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +76,26 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(configFactory, keyDeserializer, errorHandlingDeserializer);
     }
 
+    @Bean
+    public ConsumerFactory<String, TransactionDtoResult> consumerFactoryTransactionResult() {
+        StringDeserializer keyDeserializer = new StringDeserializer();
+        JsonDeserializer<TransactionDtoResult> jsonDeserializer = new JsonDeserializer<>(TransactionDtoResult.class);
+        ErrorHandlingDeserializer<TransactionDtoResult> errorHandlingDeserializer =
+                new ErrorHandlingDeserializer<>(jsonDeserializer);
+
+        final Map<String, Object> configFactory = new HashMap<>();
+        configFactory.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, consumerPropertyTransaction.bootstrapServer());
+        configFactory.put(ConsumerConfig.GROUP_ID_CONFIG, consumerPropertyTransaction.groupIdTransaction());
+        configFactory.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configFactory.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        configFactory.put(JsonDeserializer.VALUE_DEFAULT_TYPE, consumerPropertyTransaction.transactionPathResult());
+        configFactory.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, consumerPropertyTransaction.offsetReset());
+        configFactory.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, consumerPropertyTransaction.autoCommit());
+        configFactory.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, consumerPropertyTransaction.isolation());
+
+        return new DefaultKafkaConsumerFactory<>(configFactory, keyDeserializer, errorHandlingDeserializer);
+    }
+
     @Bean("listenerFactoryAccount")
     public ConcurrentKafkaListenerContainerFactory<String, AccountDtoRequest> kafkaListenerFactoryAccount() {
         final ConcurrentKafkaListenerContainerFactory<String, AccountDtoRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -88,6 +109,15 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, TransactionDtoRequest> kafkaListenerFactoryTransaction() {
         final ConcurrentKafkaListenerContainerFactory<String, TransactionDtoRequest> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactoryTransaction());
+        factory.setCommonErrorHandler(errorHandler());
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+        return factory;
+    }
+
+    @Bean("listenerFactoryTransactionResult")
+    public ConcurrentKafkaListenerContainerFactory<String, TransactionDtoResult> kafkaListenerFactoryTransactionResult() {
+        final ConcurrentKafkaListenerContainerFactory<String, TransactionDtoResult> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactoryTransactionResult());
         factory.setCommonErrorHandler(errorHandler());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;

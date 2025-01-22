@@ -16,6 +16,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          batch_size: 100
+          order_inserts: true
+          order_updates: true
 
     zookeeper:
       # Настройка для подключения к Zookeeper
@@ -29,6 +33,7 @@ logging:
   level:
     ROOT: INFO
     ru.t1.java.demo.controller.ClientController: DEBUG
+    org.springframework.transaction: TRACE
 
 t1:
   scan-path: ru.t1.java.demo
@@ -59,16 +64,21 @@ kafka:
       transaction:
         bootstrapServer: ${kafka.config.bootstrapServer}
         groupIdTransaction: transactionGroup
+        transactionPathResult: ru.t1.java.demo.dto.response.TransactionDtoResult
         transactionPath: ru.t1.java.demo.dto.request.TransactionDtoRequest
         offsetReset: earliest
         autoCommit: false
         isolation: read_committed
+
   message:
     timeOut: 3
     metricTopic: t1_demo_metrics
     logErrorTopic: ${kafka.message.metricTopic}
     accountTopic: t1_demo_accounts
     transactionTopic: t1_demo_transactions
+    transactionAcceptTopic: t1_demo_transaction_accept
+    transactionResultTopic: t1_demo_transaction_result
     metricHeader: METRICS
     logErrorHeader: DATA_SOURCE
+    transactionsHeader: TRANSACTION
 

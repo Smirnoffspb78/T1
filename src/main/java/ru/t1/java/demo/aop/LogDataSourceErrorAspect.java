@@ -12,8 +12,6 @@ import ru.t1.java.demo.dto.response.DataSourceErrorLogDto;
 import ru.t1.java.demo.service.DataSourceErrorService;
 import ru.t1.java.demo.out.KafkaProducerService;
 
-import java.util.concurrent.TimeUnit;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static ru.t1.java.demo.util.ExceptionUtil.createDataSourceErrorLog;
 import static ru.t1.java.demo.util.ExceptionUtil.getStackTraceAsString;
