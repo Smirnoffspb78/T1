@@ -1,7 +1,8 @@
-package ru.t1.java.demo.dto;
+package ru.t1.java.demo.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.t1.java.demo.dto.ClientDto;
 import ru.t1.java.demo.model.enums.AccountType;
 
 import java.math.BigDecimal;

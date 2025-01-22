@@ -1,32 +1,31 @@
 package ru.t1.java.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.t1.java.demo.dto.response.DataSourceErrorLogDto;
 import ru.t1.java.demo.model.DataSourceErrorLog;
 import ru.t1.java.demo.repository.DataSourceErrorLogRepository;
-import ru.t1.java.demo.service.LogErrorService;
+import ru.t1.java.demo.service.DataSourceErrorService;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
-import static ru.t1.java.demo.util.ExtractStack.getStackTraceAsString;
 
 /**
  * Сервисный слой для работы с исключениями.
  */
 @Service
 @RequiredArgsConstructor
-public class LogErrorServiceImpl implements LogErrorService {
+public class DataSourceErrorServiceImpl implements DataSourceErrorService {
 
     private final DataSourceErrorLogRepository dataSourceErrorLogRepository;
 
+    private final ModelMapper modelMapper;
+
     @Transactional(propagation = REQUIRES_NEW)
     @Override
-    public void logError(Throwable throwable, String methodSignature) {
-        final DataSourceErrorLog errorLog = new DataSourceErrorLog();
-        final String stackTrace = getStackTraceAsString(throwable);
-        errorLog.setMessage(throwable.getMessage());
-        errorLog.setStackTrace(stackTrace);
-        errorLog.setMethodSignature(methodSignature);
-        dataSourceErrorLogRepository.save(errorLog);
+    public void save(DataSourceErrorLogDto dataSourceErrorLog) {
+        final DataSourceErrorLog dataSourceErrorLog1 = modelMapper.map(dataSourceErrorLog, DataSourceErrorLog.class);
+        dataSourceErrorLogRepository.save(dataSourceErrorLog1);
     }
 }

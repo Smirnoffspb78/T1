@@ -2,8 +2,9 @@ package ru.t1.java.demo.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.t1.java.demo.dto.AccountDtoRequest;
-import ru.t1.java.demo.dto.AccountDtoResponse;
+import ru.t1.java.demo.dto.request.AccountDtoRequest;
+import ru.t1.java.demo.dto.response.AccountDtoResponse;
+import ru.t1.java.demo.model.Account;
 
 
 /**
@@ -28,4 +29,6 @@ public interface AccountService {
      * Создает новый банковский счет клиента.
      */
     Long createAccount(AccountDtoRequest accountDtoRequest);
+
+    Account getAccountById(Long id);
 }

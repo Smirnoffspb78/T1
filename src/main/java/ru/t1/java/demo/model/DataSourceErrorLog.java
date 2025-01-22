@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-
 /**
  * Логер для ошибок.
  * <p>{@link #stackTrace} - текст стек-трейса</p>

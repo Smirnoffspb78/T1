@@ -1,4 +1,4 @@
-package ru.t1.java.demo.dto;
+package ru.t1.java.demo.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,7 +2,8 @@ package ru.t1.java.demo.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.t1.java.demo.dto.TransactionDtoResponse;
+import ru.t1.java.demo.dto.request.TransactionDtoRequest;
+import ru.t1.java.demo.dto.response.TransactionDtoResponse;
 
 /**
  * Сервисный слой для работы с транзакциями.
@@ -21,4 +22,11 @@ public interface TransactionService {
      * @return Информация о банковском счете
      */
     TransactionDtoResponse getTransaction(Long id);
+
+    /**
+     * Сохраняет транзакцию в БД
+     * @param transactionDtoRequest Dto транзакции
+     * @return Идентификатор транзакции
+     */
+    Long saveTransaction(TransactionDtoRequest transactionDtoRequest);
 }
