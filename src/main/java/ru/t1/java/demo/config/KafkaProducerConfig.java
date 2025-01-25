@@ -9,8 +9,10 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import ru.t1.java.demo.config.property.KafkaProducerProperties;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
@@ -25,10 +27,15 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProducerProperties.getBootstrapServer());
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        configProps.put(ProducerConfig.ACKS_CONFIG, "all");
+        configProps.put(ProducerConfig.ACKS_CONFIG, kafkaProducerProperties.getAcks());
+        configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "metric-" + UUID.randomUUID());
         configProps.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaProducerProperties.getTimeout());
         configProps.put(ProducerConfig.RETRIES_CONFIG, kafkaProducerProperties.getRetry());
         configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, kafkaProducerProperties.getIdempotence());
+
+        configProps.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, 10000);
+        configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 10000);
+
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
@@ -36,4 +43,5 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
 }

@@ -40,23 +40,32 @@ kafka:
   config:
     bootstrapServer: "localhost:29092,localhost:39092,localhost:49092"
     producer:
+      bootstrapServer: ${kafka.config.bootstrapServer}
       acks: "all"
       retry: 3
-      timeout: 2000
+      timeout: 30000
       idempotence: true
     consumer:
-      groupIdAccount: accountGroup
-      groupIdTransaction: transactionGroup
-      readPackage: ru.t1.java.demo.dto
-      accountPath: ru.t1.java.demo.dto.request.AccountDtoRequest
-      transactionPath: ru.t1.java.demo.dto.request.TransactionDtoRequest
-      infoHeaders: false
-      offsetReset: earliest
-      autoCommit: true
-  topics:
-    t1_demo_metrics: t1_demo_metrics
-    accounts: t1_demo_accounts
-    transactions: t1_demo_transactions
-  headers:
-    metric: METRICS
-    logError: DATA_SOURCE
+      account:
+        bootstrapServer: ${kafka.config.bootstrapServer}
+        groupIdAccount: accountGroup
+        accountPath: ru.t1.java.demo.dto.request.AccountDtoRequest
+        offsetReset: earliest
+        autoCommit: false
+        isolation: read_committed
+      transaction:
+        bootstrapServer: ${kafka.config.bootstrapServer}
+        groupIdTransaction: transactionGroup
+        transactionPath: ru.t1.java.demo.dto.request.TransactionDtoRequest
+        offsetReset: earliest
+        autoCommit: false
+        isolation: read_committed
+  message:
+    timeOut: 3
+    metricTopic: t1_demo_metrics
+    logErrorTopic: ${kafka.message.metricTopic}
+    accountTopic: t1_demo_accounts
+    transactionTopic: t1_demo_transactions
+    metricHeader: METRICS
+    logErrorHeader: DATA_SOURCE
+

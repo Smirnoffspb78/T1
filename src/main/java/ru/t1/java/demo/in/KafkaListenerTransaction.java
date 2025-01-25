@@ -1,4 +1,4 @@
-package ru.t1.java.demo.service.kafka;
+package ru.t1.java.demo.in;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ public class KafkaListenerTransaction {
 
     private final TransactionService transactionService;
 
-    @KafkaListener(topics = "t1_demo_transactions", groupId = "transactionGroup",
+    @KafkaListener(topics = "${kafka.message.transactionTopic}", groupId = "${kafka.config.consumer.transaction.groupIdTransaction}",
             containerFactory = "listenerFactoryTransaction")
     public void listenTransaction(@Payload TransactionDtoRequest transactionDtoRequest) {
         log.info("Received message: {}", transactionDtoRequest);

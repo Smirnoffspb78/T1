@@ -28,7 +28,7 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @GetMapping("{id}")
-    @Metric
+    @Metric(validTime = 1)
     public AccountDtoResponse getAccount(@PathVariable(name = "id") Long id) {
         return accountService.getAccount(id);
     }
@@ -36,14 +36,14 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @PostMapping
     @ResponseStatus(CREATED)
-    @Metric
+    @Metric(validTime = 1)
     public Long createAccount(@Valid @RequestBody AccountDtoRequest accountDtoRequest) {
         return accountService.createAccount(accountDtoRequest);
     }
 
     @Override
     @GetMapping
-    @Metric
+    @Metric(validTime = 1)
     public Page<AccountDtoResponse> getAllAccounts(Pageable pageable) {
         return accountService.getAllAccounts(pageable);
     }

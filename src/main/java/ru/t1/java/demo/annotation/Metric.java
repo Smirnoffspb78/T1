@@ -11,4 +11,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface Metric {
+    /**
+     * Допустимое время выполнения, [мс]
+     * @return Допустимое время выполнения
+     */
+    int validTime();
 }

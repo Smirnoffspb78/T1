@@ -21,14 +21,14 @@ public class TransactionControllerImpl implements TransactionController {
 
     @Override
     @GetMapping
-    @Metric
+    @Metric(validTime = 1)
     public Page<TransactionDtoResponse> getAllTransactions(Pageable pageable) {
         return transactionService.getAllTransactions(pageable);
     }
 
     @Override
     @GetMapping("{id}")
-    @Metric
+    @Metric(validTime = 1)
     public TransactionDtoResponse getTransaction(@PathVariable(name = "id") Long id) {
         return transactionService.getTransaction(id);
     }
