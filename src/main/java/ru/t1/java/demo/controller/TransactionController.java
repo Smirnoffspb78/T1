@@ -2,7 +2,7 @@ package ru.t1.java.demo.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.t1.java.demo.dto.TransactionDtoResponse;
+import ru.t1.java.demo.dto.response.TransactionDtoResponse;
 
 /**
  * Контроллер для работы с транзакциями.

@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import ru.t1.java.demo.dto.TransactionDtoResponse;
+import ru.t1.java.demo.dto.response.TransactionDtoResponse;
 import ru.t1.java.demo.exception.EntityNotFoundException;
 import ru.t1.java.demo.model.Transaction;
 import ru.t1.java.demo.repository.TransactionRepository;

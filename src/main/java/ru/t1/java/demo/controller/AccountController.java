@@ -3,8 +3,8 @@ package ru.t1.java.demo.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.t1.java.demo.dto.AccountDtoRequest;
-import ru.t1.java.demo.dto.AccountDtoResponse;
+import ru.t1.java.demo.dto.request.AccountDtoRequest;
+import ru.t1.java.demo.dto.response.AccountDtoResponse;
 
 /**
  * Контроллер для работы с банковскими счетами.
