@@ -44,7 +44,7 @@ public class MetricAspect {
             MetricInfoDtoKafka metricInfoDtoKafka =new MetricInfoDtoKafka(resultTime, joinPoint.getSignature().getName(), parameters);
             try {
                 kafkaProducerService.sendMessage(metricProperty.metricTopic(), "errorType",
-                        metricProperty.metricHeader(), metricInfoDtoKafka);
+                        metricProperty.metricHeader(), metricInfoDtoKafka, metricProperty.keyMetric());
             } catch (Throwable e){
                 log.error(e.getMessage());
                 e.printStackTrace();

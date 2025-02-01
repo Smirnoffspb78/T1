@@ -3,7 +3,11 @@ package ru.t1.java.demo.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.t1.java.demo.dto.request.TransactionDtoRequest;
+import ru.t1.java.demo.dto.response.TransactionDtoAccept;
 import ru.t1.java.demo.dto.response.TransactionDtoResponse;
+import ru.t1.java.demo.dto.response.TransactionDtoResult;
+
+import java.util.Optional;
 
 /**
  * Сервисный слой для работы с транзакциями.
@@ -29,4 +33,14 @@ public interface TransactionService {
      * @return Идентификатор транзакции
      */
     Long saveTransaction(TransactionDtoRequest transactionDtoRequest);
+
+    /**
+     * Выполняет кредитовую операцию.
+     *
+     * @param transactionDtoRequest Dto транзакции
+     * @return
+     */
+    Optional<TransactionDtoAccept> rejectTransactionOperation(TransactionDtoRequest transactionDtoRequest);
+
+    void handleResultTransaction(TransactionDtoResult transactionDtoResult);
 }

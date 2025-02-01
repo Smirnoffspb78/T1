@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-import static java.util.UUID.randomUUID;
 import static org.springframework.kafka.support.KafkaHeaders.KEY;
 import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 
@@ -21,12 +20,12 @@ public class KafkaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public CompletableFuture<SendResult<String, String>> sendMessage(String topic, String headerKey, String header, Object payload) {
+    public CompletableFuture<SendResult<String, String>> sendMessage(String topic, String headerKey, String header, Object payload, String key) {
         Message<Object> kafkaMessage = MessageBuilder
                 .withPayload(payload)
                 .setHeader(TOPIC, topic)
                 .setHeader(headerKey, header)
-                .setHeader(KEY, randomUUID().toString())
+                .setHeader(KEY, key)
                 .build();
         return kafkaTemplate.executeInTransaction(operations -> operations.send(kafkaMessage));
     }
